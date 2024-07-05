@@ -1,0 +1,175 @@
+/* General Page Styles */
+#main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure it takes up the full height of the viewport */
+    background-color: #f5f5f5; /* Optional: Background color for the entire page */
+    background-image: url('../assets/background.png'); /* Background image */
+    background-size: cover;
+    background-position: center;
+    padding-top: 5rem; /* Create space for the header */
+    padding-bottom: 5rem; /* Create space for the footer */
+    font-family: Georgia, serif; /* Font for the entire page */
+    color: #333; /* General text color */
+}
+
+/* Login Section */
+#login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Make sure it takes up the full height */
+}
+
+/* Login Container Styles */
+.login-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    padding: 1.5rem; /* Slightly less padding */
+    border-radius: 12px; /* Larger border-radius for a more rounded appearance */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+    max-width: 30vw; /* Adjust max-width to 70% of viewport width */
+    max-height: 70vh; /* Adjust max-height to 70% of viewport height */
+    width: 70vw; /* Ensure it takes 70% of the viewport width */
+    height: auto; /* Allow height to adjust based on content */
+    overflow: auto; /* Add scrollbars if content overflows */
+}
+
+/* Typing Effect Styles */
+.typing {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 4s steps(40, end) 1s forwards;
+  font-family: "Georgia", serif; /* Use Georgia font for typing effect */
+  font-weight: 800; /* Maintain font-weight */
+  font-size: 2rem; /* Adjust font-size as needed */
+  text-transform: uppercase; /* Maintain text-transform */
+  text-align: center; /* Center the text */
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Form Header Styles */
+.form-header {
+    font-size: 2rem; /* Larger font size for the header */
+    margin-bottom: 1.5rem; /* Increased space below the header */
+    text-align: center; /* Center the header text */
+    font-weight: bold; /* Make the header bold */
+    font-family: "Georgia", serif; /* Ensure Georgia font for the header */
+}
+
+/* Form Element Styles */
+.grid {
+    margin-bottom: 1.5rem; /* Increased space below each input group */
+}
+
+label {
+    display: block; /* Ensure the label takes full width */
+    font-size: 1.125rem; /* Larger font size for better readability */
+    font-weight: bold; /* Make labels bold */
+    margin-bottom: 0.75rem; /* Space between label and input */
+    color: #333; /* Optional: Adjust color for better contrast */
+}
+
+.bg-slate-100 {
+    background-color: #f0f0f0; /* Light grey background */
+}
+
+input {
+    font-family: 'Arial', sans-serif; /* Change to your desired font-family */
+    font-size: 1rem; /* Adjust font size */
+    padding: 0.75rem; /* Increased padding for better spacing */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+}
+
+.bg-slate-100 input {
+    background-color: #fff;
+}
+
+input:focus {
+    border-color: #a0aec0;
+    box-shadow: 0 0 0 1px #a0aec0;
+}
+
+/* Password Container Styles */
+.password-container {
+    position: relative; /* Position relative to place the icon absolutely inside */
+}
+
+.password-input {
+    width: 100%; /* Ensure input takes full width */
+    padding-right: 3rem; /* Add padding to accommodate the icon */
+}
+
+/* Eye Icon Styles */
+.eye-icon {
+    position: absolute;
+    right: 0.75rem; /* Adjust position from the right edge */
+    top: 50%; /* Vertically center the icon */
+    transform: translateY(-50%); /* Adjust vertical alignment */
+    cursor: pointer;
+    font-size: 1.25rem; /* Size of the icon */
+    color: #333; /* Icon color */
+}
+
+/* Form Footer Styles */
+.form-footer {
+    margin-top: 2rem; /* Increased space above the footer */
+    text-align: center; /* Center the footer text */
+    font-size: 1rem; /* Adjust the font size for the footer */
+}
+
+.form-footer a {
+    color: #2d6a4f; /* Adjust link color */
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Button Styles */
+button {
+    font-family: 'Arial', sans-serif; /* Change to your desired font-family */
+    font-size: 1rem; /* Adjust font size */
+    background-color: #2f855a; /* Green background color */
+    color: white; /* Text color */
+    padding: 0.75rem 1.5rem; /* Adjust padding for the button */
+    border: none;
+    border-radius: 4px; /* Rounded corners for the button */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+button:hover {
+    background-color: #276749; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+/* Typing Effect Styles */
+.typing-effect {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+    font-family: "Georgia", serif; /* Font for the typing effect */
+    font-weight: 800; /* Maintain font-weight */
+    font-size: 2rem; /* Adjust font-size as needed */
+    text-transform: uppercase; /* Maintain text-transform */
+    text-align: center; /* Center the text */
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: black; }
+}
