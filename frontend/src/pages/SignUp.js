@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import Profile from '../assets/profile.png'; // Import the image
+import Profile from '../assets/profile.png';
+import SummaryApi from '../common/index';
 
 const imageToBase64 = async (image) => {
   const reader = new FileReader();
@@ -43,8 +44,31 @@ const SignUp = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (data.password === data.confirmPassword) {
+      try {
+        const dataResponse = await fetch(SummaryApi.SignUp.url, {
+          method: SummaryApi.SignUp.method,
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!dataResponse.ok) {
+          throw new Error(`HTTP error! status: ${dataResponse.status}`);
+        }
+
+        const responseData = await dataResponse.json();
+        console.log("data", responseData);
+      } catch (error) {
+        console.error("Error during sign up:", error);
+      }
+    } else {
+      console.log("Passwords do not match");
+    }
   };
 
   return (
@@ -60,7 +84,7 @@ const SignUp = () => {
             <div className='mx-auto w-full max-w-sm bg-white p-5 rounded-lg shadow-lg relative'>
               <div className='w-24 h-24 mx-auto relative overflow-hidden rounded-full border-4 border-gray-300'>
                 <img 
-                  src={data.profilePic || Profile} // Use the imported image here
+                  src={data.profilePic || Profile} 
                   alt='Profile' 
                   className='w-full h-full object-cover'
                 />
@@ -148,7 +172,7 @@ const SignUp = () => {
             </div>
 
             <button 
-              className='bg-green-800 hover:bg-green-900 text-white px-6 py-2 w-full max-w-[100px] rounded-full hover:scale-110 transition-all mx-auto block mt-6' // Reduced margin-top
+              className='bg-green-800 hover:bg-green-900 text-white px-6 py-2 w-full max-w-[100px] rounded-full hover:scale-110 transition-all mx-auto block mt-6'
             >
               SignUp
             </button>
@@ -161,6 +185,6 @@ const SignUp = () => {
       </section>
     </div>
   );
-}
+};
 
 export default SignUp;

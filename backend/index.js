@@ -1,11 +1,16 @@
 const express = require('express');
 const sequelize = require('./config/database');
-const User = require('./models/User');
-const userRoutes = require('./routes/user');
+const User = require('./models/userModel'); 
+const userRoutes = require('./routes'); 
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 3005;
 
+app.use(cors({
+  origin: 'http://localhost:3000', 
+}));
+// Enable CORS for all routes
 app.use(express.json());
 
 // Test the connection
@@ -23,7 +28,8 @@ sequelize.sync()
     console.log('Database & tables created!');
   });
 
-app.use('/api/users', userRoutes);
+// Use the user routes
+app.use('/api', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
