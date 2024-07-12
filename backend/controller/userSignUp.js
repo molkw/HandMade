@@ -44,9 +44,10 @@ async function userSignUpController(req, res) {
         }
 
         const payload = {
-            email,
+           ...req.body,
+           role:"GENERAL",
             password: hashPassword,
-            name
+            
         };
 
         // Create a new user

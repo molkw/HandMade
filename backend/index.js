@@ -3,17 +3,24 @@ const sequelize = require('./config/database');
 const User = require('./models/userModel'); 
 const userRoutes = require('./routes'); 
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3005;
 
-app.use(cors({
-  origin: 'http://localhost:3000', 
-}));
-// Enable CORS for all routes
-app.use(express.json());
+require('dotenv').config();
 
-// Test the connection
+
+app.use(cors({
+  origin: process.env.FRONTEND_URL, 
+  credentials: true, 
+}));
+
+
+app.use(express.json());
+app.use(cookieParser());
+
+
 sequelize.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
@@ -22,13 +29,13 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-// Sync the models
+
 sequelize.sync()
   .then(() => {
     console.log('Database & tables created!');
   });
 
-// Use the user routes
+
 app.use('/api', userRoutes);
 
 app.get('/', (req, res) => {
