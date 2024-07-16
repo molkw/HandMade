@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const User = require('../models/userModel'); // Correct import
+const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
 async function userSignInController(req, res) {
@@ -7,64 +7,51 @@ async function userSignInController(req, res) {
         const { email, password } = req.body;
 
         if (!email) {
-            return res.status(400).json({
-                message: "Please provide email",
-                error: true,
-                success: false,
-            });
+            throw new Error("Please provide email");
         }
-
         if (!password) {
-            return res.status(400).json({
-                message: "Please provide password",
-                error: true,
-                success: false,
-            });
+            throw new Error("Please provide password");
         }
 
-        // Use User model
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(404).json({
-                message: "User not found",
-                error: true,
-                success: false,
-            });
+            throw new Error("User not found");
         }
 
         const checkPassword = await bcrypt.compare(password, user.password);
+        console.log("checkPassword", checkPassword);
 
         if (checkPassword) {
             const tokenData = {
-                id: user.id, // Use id field
+                id: user.id, // Ensure _id is included
                 email: user.email,
             };
+
             const token = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: '8h' });
 
-            const tokenOptions = {
+            console.log("Generated token:", token);
+
+            const tokenOption = {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', // Set secure based on environment
+                secure: true,
+                sameSite: 'strict'
             };
 
-            return res.cookie('token', token, tokenOptions).status(200).json({
-                message: "Login successful",
+            res.cookie("token", token, tokenOption).status(200).json({
+                message: "Login successfully",
                 data: token,
                 success: true,
-                error: false,
+                error: false
             });
+
         } else {
-            return res.status(401).json({
-                message: "Invalid password",
-                error: true,
-                success: false,
-            });
+            throw new Error("Please check Password");
         }
 
     } catch (err) {
-        console.error('Error in sign-in controller:', err);
-        return res.status(500).json({
-            message: err.message || 'Internal Server Error',
+        res.status(400).json({
+            message: err.message || err,
             error: true,
             success: false,
         });
