@@ -1,14 +1,18 @@
 const express = require('express');
 const sequelize = require('./config/database');
 const User = require('./models/userModel'); 
+const Product =  require('./models/productModel'); 
 const userRoutes = require('./routes'); 
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-
+const bodyParser = require('body-parser');
 const app = express();
 const port = 3005;
 
 require('dotenv').config();
+
+app.use(bodyParser.json({ limit: '50mb' })); // Adjust limit as needed
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
 app.use(cors({

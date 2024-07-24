@@ -10,14 +10,7 @@ import imageTobase64 from '../helpers/imageTobase64';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-const imageToBase64 = async (image) => {
-  const reader = new FileReader();
-  return new Promise((resolve, reject) => {
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-    reader.readAsDataURL(image);
-  });
-};
+
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -103,9 +96,9 @@ const SignUp = () => {
     
     const imagePic = await imageTobase64(file)
     
-    setData((preve)=>{
+    setData((prev)=>{
       return{
-        ...preve,
+        ...prev,
         profilePic : imagePic
       }
     })
