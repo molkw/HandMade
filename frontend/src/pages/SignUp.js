@@ -6,7 +6,7 @@ import Profile from '../assets/profile.png';
 import SummaryApi from '../common/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import validator from 'validator'; // Import validator library
+import imageTobase64 from '../helpers/imageTobase64';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -58,8 +58,8 @@ const SignUp = () => {
       case 'name':
         if (!value) {
           newErrors.name = "Ce champ est requis.";
-        } else if (!/^[A-Za-z]+( [A-Za-z]+)?$/.test(value) || value.length > 12) {
-          newErrors.name = "Le nom doit contenir uniquement des lettres et ne pas dépasser 12 caractères, avec un seul espace autorisé.";
+        } else if (!/^[A-Za-z]+( [A-Za-z]+)?$/.test(value) || value.length > 15) {
+          newErrors.name = "Le nom doit contenir uniquement des lettres et ne pas dépasser 15 caractères, avec un seul espace autorisé.";
         } else {
           newErrors.name = "";
         }
@@ -98,16 +98,19 @@ const SignUp = () => {
     setErrors(newErrors);
   };
 
-  const handleUploadPic = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imagePic = await imageToBase64(file);
-      setData((prev) => ({
-        ...prev,
-        profilePic: imagePic
-      }));
-    }
-  };
+  const handleUploadPic = async(e) =>{
+    const file = e.target.files[0]
+    
+    const imagePic = await imageTobase64(file)
+    
+    setData((preve)=>{
+      return{
+        ...preve,
+        profilePic : imagePic
+      }
+    })
+
+  }
 
   const handleRemovePic = () => {
     setData((prev) => ({
@@ -124,8 +127,8 @@ const SignUp = () => {
     if (!name) {
       newErrors.name = "Ce champ est requis.";
       valid = false;
-    } else if (!/^[A-Za-z]+( [A-Za-z]+)?$/.test(name) || name.length > 12) {
-      newErrors.name = "Le nom doit contenir uniquement des lettres et ne pas dépasser 12 caractères, avec un seul espace autorisé.";
+    } else if (!/^[A-Za-z]+( [A-Za-z]+)?$/.test(name) || name.length > 15) {
+      newErrors.name = "Le nom doit contenir uniquement des lettres et ne pas dépasser 15 caractères, avec un seul espace autorisé.";
       valid = false;
     }
 
@@ -269,7 +272,7 @@ const SignUp = () => {
               </div>
               <div>
                 <label>Password:</label>
-                <div className={`bg-slate-100 p-2 rounded-md ${errors.password ? 'border border-red-500' : ''}`}>
+                <div className={`bg-slate-100 p-2 relative rounded-md ${errors.password ? 'border border-red-500' : ''}`}>
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder='Enter password'
@@ -277,7 +280,7 @@ const SignUp = () => {
                     value={data.password}
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
-                    className='w-full outline-none bg-transparent rounded-md'
+                    className='w-full outline-none bg-transparent rounded-md pr-10'
                   />
                   <span
                     className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer'
@@ -290,7 +293,7 @@ const SignUp = () => {
               </div>
               <div>
                 <label>Confirm Password:</label>
-                <div className={`bg-slate-100 p-2 rounded-md ${errors.confirmPassword ? 'border border-red-500' : ''}`}>
+                <div className={`bg-slate-100 p-2 relative rounded-md ${errors.confirmPassword ? 'border border-red-500' : ''}`}>
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
                     placeholder='Confirm password'
@@ -298,7 +301,7 @@ const SignUp = () => {
                     value={data.confirmPassword}
                     onChange={handleOnChange}
                     onBlur={handleOnBlur}
-                    className='w-full outline-none bg-transparent rounded-md'
+                    className='w-full outline-none bg-transparent rounded-md pr-10'
                   />
                   <span
                     className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer'
@@ -320,10 +323,9 @@ const SignUp = () => {
             </button>
 
             </div>
-
-            <div className='text-center'>
-              <p>Already have an account? <Link to='/login' className='text-green-800 hover:underline'>Login</Link></p>
-            </div>
+            <p className='mt-4 text-center'>
+              Already have an account? <Link to='/login' className='text-green-700 hover:underline'>Log in</Link>
+            </p>
           </form>
         </div>
       </section>

@@ -6,26 +6,30 @@ const User = sequelize.define('User', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true
-},
-name: {
+  },
+  name: {
     type: Sequelize.STRING,
     allowNull: false
-},
-email: {
+  },
+  email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
-},
-password: {
+  },
+  password: {
     type: Sequelize.STRING,
     allowNull: false
-},
+  },
   profilePic: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  role: {
     type: DataTypes.STRING,
     allowNull: true
   }
 }, {
-  timestamps: true // This will add the `createdAt` and `updatedAt` fields automatically
+  timestamps: true
 });
 
 module.exports = User;

@@ -13,18 +13,19 @@ async function userSignInController(req, res) {
             throw new Error("Please provide password");
         }
 
-        const user = await User.findOne({ email });
+        console.log("Attempting to find user with email:", email);
+        const user = await User.findOne({ where: { email } });
 
         if (!user) {
             throw new Error("User not found");
         }
 
         const checkPassword = await bcrypt.compare(password, user.password);
-        console.log("checkPassword", checkPassword);
+        console.log("Password check result:", checkPassword);
 
         if (checkPassword) {
             const tokenData = {
-                id: user.id, // Ensure _id is included
+                id: user.id, 
                 email: user.email,
             };
 
@@ -46,10 +47,11 @@ async function userSignInController(req, res) {
             });
 
         } else {
-            throw new Error("Please check Password");
+            throw new Error("Incorrect password");
         }
 
     } catch (err) {
+        console.error('Error:', err.message || err);
         res.status(400).json({
             message: err.message || err,
             error: true,

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css'; 
 import SummaryApi from '../common/index';
 import { ToastContainer, toast } from 'react-toastify';
+import Context from '../context';
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [data, setData] = useState({
         email: "",
         password: ""
     });
+    const {fetchUserDetails} = useContext(Context)
     const navigate = useNavigate()
+      
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setData((prev) => ({
@@ -36,10 +39,11 @@ const Login = () => {
     
             if (dataApi.success) {
                 toast.success(dataApi.message);
-                // Delay navigation to ensure the toast is displayed
+              
                 setTimeout(() => {
                     navigate('/');
-                }, 1000); // 2-second delay
+                }, 1000); 
+                fetchUserDetails()
             } else if (dataApi.error) {
                 toast.error(dataApi.message);
             }

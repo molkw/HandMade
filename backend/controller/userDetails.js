@@ -2,9 +2,9 @@ const User = require('../models/userModel');
 
 async function userDetailsController(req, res) {
     try {
-        console.log("userId in controller:", req.userId); // Debug statement to verify userId
+        console.log("userId in controller:", req.userId); 
 
-        const user = await User.findByPk(req.userId); // Use req.userId to fetch user
+        const user = await User.findByPk(req.userId); 
 
         if (!user) {
             return res.status(404).json({
